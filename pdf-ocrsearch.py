@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 
 import pytesseract
 from PIL import Image
-import fitz  # fitz就是pip install PyMuPDF
+import fitz  # pip install PyMuPDF
 import os
 import time
 from multiprocessing import Pool, cpu_count
@@ -25,7 +25,6 @@ pytesseract.pytesseract.tesseract_cmd = (
 
 SEARCHING_TARGET = "软件"
 PDF_file = Path(r"test.pdf")
-print(os.path.abspath(PDF_file))
 
 
 def one_page(tempdir, page_id, page):
@@ -44,8 +43,8 @@ def one_page(tempdir, page_id, page):
                         SEARCHING_TARGET, 
                         filename,
                         indx))
-    else:
-        print("Noting found in page {}".format(filename))
+    # else:
+    #     print("Noting found in page {}".format(filename))
 
 
 
@@ -109,17 +108,4 @@ def speed_test():
 
 
 if __name__ == "__main__":
-    t0 = mytime()  # start a timer
-    
-    filename = PDF_file
-    cpu = cpu_count()
-
-    # make vectors of arguments for the processes
-    vectors = [(i, cpu, filename) for i in range(cpu)]
-    print("Starting %i processes for '%s'." % (cpu, filename))
-
-    pool = Pool()  # make pool of 'cpu_count()' processes
-    pool.map(one_job, vectors, 1)  # start processes passing each a vector
-
-    t1 = mytime()  # stop the timer
-    print("Total time %g seconds" % round(t1 - t0, 2))
+    speed_test()
