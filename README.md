@@ -13,7 +13,7 @@ pip3 install pillow pytesseract PyMuPDF
 sudo apt-get install tesseract-ocr
 ```
 
-或按照 [ref](https://www.geeksforgeeks.org/python-reading-contents-of-pdf-using-ocr-optical-character-recognition/) 说明安装 tesseract-ocr 的 windos 版本
+或按照 [ref](https://www.geeksforgeeks.org/python-reading-contents-of-pdf-using-ocr-optical-character-recognition/) 说明安装 tesseract-ocr 的 windows 版本
 
 还需要通过 [tessdata-fast](https://github.com/tesseract-ocr/tessdata_fast) 或 [tessdata](https://github.com/tesseract-ocr/tessdata) 下载中文识别模型
 
