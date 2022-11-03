@@ -26,7 +26,7 @@ SEARCHING_TARGET = "软件"
 PDF_file = Path(r"test.pdf")
 ```
 
-## 效果(欠佳)
+## 效果
 
 在使用多线程优化之后, 可以达到 平均 2s 检测一页. 是不使用优化的一半.
 
