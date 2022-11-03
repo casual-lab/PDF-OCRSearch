@@ -18,7 +18,7 @@ SEARCHING_TARGET = "软件"
 # https://github.com/UB-Mannheim/tesseract/wiki/Downloading-Tesseract-OCR-Engine
 
 pytesseract.pytesseract.tesseract_cmd = (
-	r"D:\\MyZone\\downlaoded\\Tesseract-OCR-backend\\tesseract.exe"
+    r"D:\\MyZone\\downlaoded\\Tesseract-OCR-backend\\tesseract.exe"
 )
 
 
@@ -27,26 +27,28 @@ print(os.path.abspath(PDF_file))
 
 
 def main():
-	''' Main execution point of the program'''
+    ''' Main execution point of the program'''
+    with TemporaryDirectory() as tempdir:
+        pdf_doc = fitz.open(PDF_file)
+        for page_enumeration, page in enumerate(pdf_doc.pages(),start=1):
+            pix = page.get_pixmap(dpi=500)
 
-	pdf_doc = fitz.open(PDF_file)
-	for page_enumeration, page in enumerate(pdf_doc.pages(),start=1):
-		pix = page.get_pixmap(dpi=500)
 
-		with NamedTemporaryFile() as fp:
-			pix.save(fp)  # 将图片写入指定的文件夹内
+            filename = f"{tempdir}\page_{page_enumeration:03}.jpg"
 
-			text = str(((pytesseract.image_to_string(Image.open(fp), lang="chi_sim"))))
-			text = text.replace(" ","")
-			findx = text.find(SEARCHING_TARGET)
-			if findx != -1:
-				print("found {} in page {}. prefix index: {}".format(
-						SEARCHING_TARGET, 
-						page_enumeration,
-						findx))
-			else:
-				print("Noting found in page {}".format(page_enumeration))
+            pix.save(filename)  # 将图片写入指定的文件夹内
+
+            text = str(((pytesseract.image_to_string(Image.open(filename), lang="chi_sim"))))
+            text = text.replace(" ","")
+            findx = text.find(SEARCHING_TARGET)
+            if findx != -1:
+                print("found {} in page {}. prefix index: {}".format(
+                        SEARCHING_TARGET, 
+                        filename,
+                        findx))
+            else:
+                print("Noting found in page {}".format(filename))
 
 if __name__ == "__main__":
-	# We only want to run this if it's directly executed!
-	main()
+    # We only want to run this if it's directly executed!
+    main()
